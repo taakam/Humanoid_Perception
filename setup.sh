@@ -13,7 +13,9 @@ sudo apt install -y \
     git \
     ninja-build \
     curl \
-    build-essential
+    wget \
+    build-essential \
+    npm
 
 # ============================================================
 # NODE.JS (LATEST STABLE)
@@ -62,23 +64,33 @@ echo "[INFO] Installing Python requirements..."
 pip install -r requirements.txt
 
 # ============================================================
+# MODEL WEIGHTS
+# ============================================================
+
+mkdir -p weights
+
+if [ ! -f "weights/yolov8x-world.pt" ]; then
+    echo "[INFO] Downloading YOLO-World weights..."
+    wget -O weights/yolov8x-world.pt \
+        https://github.com/ultralytics/assets/releases/download/v8.2.0/yolov8x-world.pt
+else
+    echo "[INFO] YOLO-World weights already exist."
+fi
+
+# ============================================================
 # GAUSSIAN SPLATTING
 # ============================================================
 
 mkdir -p third_party
 
 if [ ! -d "third_party/gaussian-splatting" ]; then
-
     echo "[INFO] Cloning Gaussian Splatting repo..."
 
     git clone \
         https://github.com/graphdeco-inria/gaussian-splatting \
         third_party/gaussian-splatting
-
 else
-
     echo "[INFO] Gaussian Splatting repo already exists."
-
 fi
 
 cd third_party/gaussian-splatting
@@ -101,19 +113,13 @@ cd ../..
 # ============================================================
 
 if [ -d "viewer" ]; then
-
     echo "[INFO] Installing viewer npm dependencies..."
 
     cd viewer
-
     npm install
-
     cd ..
-
 else
-
     echo "[WARN] viewer/ directory not found. Skipping viewer setup."
-
 fi
 
 echo "[OK] Setup complete."

@@ -31,3 +31,5 @@ viewer/node_modules/
 .idea/
 
 *.pt
+*.pt
+weights/

@@ -92,7 +92,7 @@ def parse_custom_classes(custom_classes: str | None) -> list[str]:
 def detect_semantics(
     image_dir: str | Path,
     output_json: str | Path,
-    model_name: str = "yolov8x-world.pt",
+    model_name: str = "weights/yolov8x-world.pt",
     confidence: float = 0.25,
     custom_classes: list[str] | None = None,
 ) -> Path:
@@ -206,7 +206,7 @@ if __name__ == "__main__":
 
     parser.add_argument("--images", required=True)
     parser.add_argument("--output", required=True)
-    parser.add_argument("--model", default="yolov8x-world.pt")
+    parser.add_argument("--model", default="weights/yolov8x-world.pt")
     parser.add_argument("--conf", type=float, default=0.25)
     parser.add_argument(
         "--custom-classes",
